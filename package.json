@@ -10,7 +10,8 @@
         "clean": "rimraf dist",
         "prebuild": "npm run clean",
         "build": "tsc",
-        "prepublish": "npm run build"
+        "prepare": "npm run build",
+        "prepublishOnly": "npm run test"
     },
     "repository": {
         "type": "git",
