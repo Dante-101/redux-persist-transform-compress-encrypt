@@ -6,8 +6,8 @@
     "types": "dist/index.d.ts",
     "scripts": {
         "test": "mocha ./test/test.js",
-        "cover": "istanbul cover node_modules/mocha/bin/_mocha test/*.js -- -R spec",
-        "clean": "rimraf dist",
+        "cover": "istanbul cover node_modules/mocha/bin/_mocha -- -R spec ./test/*.js",
+        "clean": "rimraf dist coverage",
         "prebuild": "npm run clean",
         "build": "tsc",
         "prepare": "npm run build",
