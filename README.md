@@ -1,4 +1,7 @@
 # redux-persist-transform-compress-encrypt
+
+[![GitHub license](https://img.shields.io/badge/license-MIT-blue.svg)](https://github.com/facebook/react/blob/master/LICENSE) [![Build Status](https://travis-ci.org/Dante-101/redux-persist-transform-compress-encrypt.svg?branch=master)](https://travis-ci.org/Dante-101/redux-persist-transform-compress-encrypt)
+
 To persist a compressed and encrypted Redux store
 
 The package creates a transformer for redux-persist. The transformer stringifies the inbound state, compresses it using [`lz-string`](https://github.com/pieroxy/lz-string) and encrypts the compressed string with AES.

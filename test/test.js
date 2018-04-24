@@ -3,8 +3,8 @@ const createCompressEncryptTransform = require('../dist/index.js').default
 
 describe('redux persist transform ', () => {
     const secretKey = 'sample test key 1'
-    const onError = () => {
-        expect.fail("there should not be any error")
+    const onError = (e) => {
+        expect.fail(e, undefined, "unexpected error: " + e.message)
     }
 
     const transform = createCompressEncryptTransform({ secretKey: secretKey, onError })
@@ -78,5 +78,4 @@ describe('redux persist transform ', () => {
         const reconstructedState = newTransform.out(persistString)
         expect(reconstructedState).to.not.exist
     })
-
 })
