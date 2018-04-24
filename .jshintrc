@@ -1,0 +1,14 @@
+{
+    "esversion": 6,
+    "node": true,
+    "asi" : true,
+    "globals": {
+        /* MOCHA */
+        "describe": false,
+        "it": false,
+        "before": false,
+        "beforeEach": false,
+        "after": false,
+        "afterEach": false
+    }
+}
