@@ -17,6 +17,25 @@ describe('redux persist transform ', () => {
         expect(reconstructedState).to.deep.eq(state)
     }
 
+    it('config not supplied', () => {
+        try {
+            createCompressEncryptTransform()
+            expect.fail()
+        } catch (e) { }
+    })
+    it('missing secret key', () => {
+        try {
+            createCompressEncryptTransform({})
+            expect.fail()
+        } catch (e) { }
+    })
+    it('invalid onError value', () => {
+        try {
+            createCompressEncryptTransform({ secretKey, onError: 'error' })
+            expect.fail()
+        } catch (e) { }
+    })
+
     it('object encrypt and decrypt', () => {
         validateTranformation({
             stringKey: "string value!",
@@ -34,18 +53,6 @@ describe('redux persist transform ', () => {
         })
         const persistString = newTransform.in(undefined)
         expect(persistString).to.not.exist
-    })
-
-    it('undefined encrypt should error', (done) => {
-        const handle = setTimeout(() => { done("error did not fire") }, 100)
-        const newTransform = createCompressEncryptTransform({
-            secretKey: secretKey,
-            onError: (e) => {
-                clearTimeout(handle)
-                done()
-            }
-        })
-        newTransform.in(undefined)
     })
 
     it('undefined decrypt should return undefined', () => {
@@ -69,9 +76,21 @@ describe('redux persist transform ', () => {
         newTransform.out(undefined)
     })
 
-    //This is a flipper test. 
-    //Ideally I want it to throw but it throws error about 1 in 7 tmes and rest of the time it doesn't throw
+    //The next two tests are flipper tests. 
+    //Ideally I want it to throw but they throw error about 1 in 7 tmes and rest of the time they don't throw
     //Issue tracked here: https://github.com/brix/crypto-js/issues/158
+    it.skip('random text decryption with legit key should error', (done) => {
+        const handle = setTimeout(() => { done("error did not fire") }, 100)
+        const newTransform = createCompressEncryptTransform({
+            secretKey,
+            onError: (e) => {
+                clearTimeout(handle)
+                done()
+            }
+        })
+        newTransform.out("asdfglka iu8to3u8o97as asd  a slkdufa")
+    })
+
     it.skip('changing the secret key for outbound should return empty', () => {
         const persistString = transform.in("random test string")
         const newTransform = createCompressEncryptTransform({

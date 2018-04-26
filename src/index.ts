@@ -27,7 +27,7 @@ export default function createCompressEncryptTransform<S>(config: TransformConfi
 const createInboundTransform = <S>(config: TransformConfigType): TransformIn<S, S | string | undefined> => (state: S) => {
     const { secretKey, onError } = config
     try {
-        if (state == undefined) throw new Error(createErrorMessage(`received invalid state: ${state}`))
+        if (state == undefined) { return state }
         const stringifiedState = stringify(state)
         const compressedState = LZ.compressToBase64(stringifiedState)
         return AES.encrypt(compressedState, secretKey).toString()
